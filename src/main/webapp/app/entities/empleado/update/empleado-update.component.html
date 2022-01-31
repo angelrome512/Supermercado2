@@ -96,7 +96,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="editForm.get('cargo')!.value == 'GERENTE' || editForm.get('cargo')!.value == 'SUPERVISOR'">
           <label class="form-control-label" jhiTranslate="supermercadoApp.empleado.codigoSU" for="field_codigoSU">Codigo SU</label>
           <input type="text" class="form-control" name="codigoSU" id="field_codigoSU" data-cy="codigoSU" formControlName="codigoSU" />
         </div>
