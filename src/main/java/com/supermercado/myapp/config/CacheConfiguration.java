@@ -48,6 +48,12 @@ public class CacheConfiguration {
             createCache(cm, com.supermercado.myapp.domain.User.class.getName());
             createCache(cm, com.supermercado.myapp.domain.Authority.class.getName());
             createCache(cm, com.supermercado.myapp.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.supermercado.myapp.domain.Cliente.class.getName());
+            createCache(cm, com.supermercado.myapp.domain.Producto.class.getName());
+            createCache(cm, com.supermercado.myapp.domain.Empleado.class.getName());
+            createCache(cm, com.supermercado.myapp.domain.Venta.class.getName());
+            createCache(cm, com.supermercado.myapp.domain.Caja.class.getName());
+            createCache(cm, com.supermercado.myapp.domain.Empresa.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

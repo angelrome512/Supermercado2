@@ -1,0 +1,55 @@
+{
+  "name": "Venta",
+  "fields": [
+    {
+      "fieldName": "numeroFactura",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["max"],
+      "fieldValidateRulesMax": "8"
+    },
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "total",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "tipoPago",
+      "fieldType": "TipoPago",
+      "fieldValues": "TARJETA,EFECTIVO",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "venta",
+      "relationshipName": "cliente"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "empleado",
+      "otherEntityRelationshipName": "venta",
+      "relationshipName": "empleado"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "producto",
+      "otherEntityRelationshipName": "venta",
+      "relationshipName": "producto"
+    }
+  ],
+  "entityTableName": "venta",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220131164502"
+}

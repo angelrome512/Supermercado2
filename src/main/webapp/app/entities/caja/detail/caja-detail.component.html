@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="caja">
+      <h2 data-cy="cajaDetailsHeading"><span jhiTranslate="supermercadoApp.caja.detail.title">Caja</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ caja.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ caja.fecha | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.saldoInicial">Saldo Inicial</span></dt>
+        <dd>
+          <span>{{ caja.saldoInicial }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.totalEfectivo">Total Efectivo</span></dt>
+        <dd>
+          <span>{{ caja.totalEfectivo }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.totalTarjeta">Total Tarjeta</span></dt>
+        <dd>
+          <span>{{ caja.totalTarjeta }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.saldoTotal">Saldo Total</span></dt>
+        <dd>
+          <span>{{ caja.saldoTotal }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.venta">Venta</span></dt>
+        <dd>
+          <div *ngIf="caja.venta">
+            <a [routerLink]="['/venta', caja.venta?.id, 'view']">{{ caja.venta?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.caja.empleado">Empleado</span></dt>
+        <dd>
+          <div *ngIf="caja.empleado">
+            <a [routerLink]="['/empleado', caja.empleado?.id, 'view']">{{ caja.empleado?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/caja', caja.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

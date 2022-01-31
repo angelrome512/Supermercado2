@@ -1,0 +1,147 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-caja-heading" data-cy="CajaCreateUpdateHeading" jhiTranslate="supermercadoApp.caja.home.createOrEditLabel">
+        Create or edit a Caja
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.fecha" for="field_fecha">Fecha</label>
+          <div class="input-group">
+            <input
+              id="field_fecha"
+              data-cy="fecha"
+              type="text"
+              class="form-control"
+              name="fecha"
+              ngbDatepicker
+              #fechaDp="ngbDatepicker"
+              formControlName="fecha"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.saldoInicial" for="field_saldoInicial">Saldo Inicial</label>
+          <input
+            type="number"
+            class="form-control"
+            name="saldoInicial"
+            id="field_saldoInicial"
+            data-cy="saldoInicial"
+            formControlName="saldoInicial"
+          />
+          <div
+            *ngIf="editForm.get('saldoInicial')!.invalid && (editForm.get('saldoInicial')!.dirty || editForm.get('saldoInicial')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('saldoInicial')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('saldoInicial')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.totalEfectivo" for="field_totalEfectivo"
+            >Total Efectivo</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalEfectivo"
+            id="field_totalEfectivo"
+            data-cy="totalEfectivo"
+            formControlName="totalEfectivo"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.totalTarjeta" for="field_totalTarjeta">Total Tarjeta</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalTarjeta"
+            id="field_totalTarjeta"
+            data-cy="totalTarjeta"
+            formControlName="totalTarjeta"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.saldoTotal" for="field_saldoTotal">Saldo Total</label>
+          <input
+            type="number"
+            class="form-control"
+            name="saldoTotal"
+            id="field_saldoTotal"
+            data-cy="saldoTotal"
+            formControlName="saldoTotal"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.venta" for="field_venta">Venta</label>
+          <select class="form-control" id="field_venta" data-cy="venta" name="venta" formControlName="venta">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="ventaOption.id === editForm.get('venta')!.value?.id ? editForm.get('venta')!.value : ventaOption"
+              *ngFor="let ventaOption of ventasSharedCollection; trackBy: trackVentaById"
+            >
+              {{ ventaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercadoApp.caja.empleado" for="field_empleado">Empleado</label>
+          <select class="form-control" id="field_empleado" data-cy="empleado" name="empleado" formControlName="empleado">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="empleadoOption.id === editForm.get('empleado')!.value?.id ? editForm.get('empleado')!.value : empleadoOption"
+              *ngFor="let empleadoOption of empleadosSharedCollection; trackBy: trackEmpleadoById"
+            >
+              {{ empleadoOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

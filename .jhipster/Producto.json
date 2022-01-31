@@ -1,0 +1,50 @@
+{
+  "name": "Producto",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cantidad",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "precioBase",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "precioTotal",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "tipoIva",
+      "fieldType": "TipoIva",
+      "fieldValues": "A,B,C"
+    },
+    {
+      "fieldName": "tipoProducto",
+      "fieldType": "TipoProducto",
+      "fieldValues": "FRUTAS,VERDURAS,CHARCUTERIA,PESCADO,PLATOS_PREPARADOS,LACTEOS,PANADERIA,BOLLERIA,LEGUMBRES,CONSERVAS,CONGELADOS,BEBIDAS,HIGIENE_HOGAR,HIGIENE_PERSONAL"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "producto",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220131164500"
+}

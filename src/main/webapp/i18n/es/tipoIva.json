@@ -1,0 +1,10 @@
+{
+  "supermercadoApp": {
+    "TipoIva": {
+      "null": "",
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    }
+  }
+}

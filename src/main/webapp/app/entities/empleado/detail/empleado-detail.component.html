@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="empleado">
+      <h2 data-cy="empleadoDetailsHeading"><span jhiTranslate="supermercadoApp.empleado.detail.title">Empleado</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ empleado.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.nombre">Nombre</span></dt>
+        <dd>
+          <span>{{ empleado.nombre }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.documento">Documento</span></dt>
+        <dd>
+          <span>{{ empleado.documento }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.direccion">Direccion</span></dt>
+        <dd>
+          <span>{{ empleado.direccion }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.email">Email</span></dt>
+        <dd>
+          <span>{{ empleado.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.telefono">Telefono</span></dt>
+        <dd>
+          <span>{{ empleado.telefono }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.cargo">Cargo</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'supermercadoApp.Cargo.' + empleado.cargo }}">{{ empleado.cargo }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.codigoSU">Codigo SU</span></dt>
+        <dd>
+          <span>{{ empleado.codigoSU }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercadoApp.empleado.activo">Activo</span></dt>
+        <dd>
+          <span>{{ empleado.activo }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/empleado', empleado.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

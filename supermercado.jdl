@@ -1,0 +1,104 @@
+enum TipoCliente {
+	PARTICULAR
+    EMPRESA
+}
+
+enum Cargo {
+	CAJERO
+    SUPERVISOR
+    GERENTE
+}
+
+enum TipoPago {
+	TARJETA,
+    EFECTIVO
+}
+
+enum TipoProducto {
+	FRUTAS,
+    VERDURAS,
+    CHARCUTERIA,
+    PESCADO,
+    PLATOS_PREPARADOS,
+    LACTEOS,
+    PANADERIA,
+    BOLLERIA,
+    LEGUMBRES,
+    CONSERVAS,
+    CONGELADOS,
+    BEBIDAS,
+    HIGIENE_HOGAR,
+    HIGIENE_PERSONAL
+}
+
+enum TipoIva{
+	A
+    B
+    C
+}
+
+entity Cliente {
+	documento String required unique maxlength (10)
+	nombre String required,
+    direccion String required,
+    email String required,
+    telefono String required,
+    tipoCliente TipoCliente
+}
+
+entity Producto {
+	codigo String required unique
+	nombre String required
+	cantidad Integer required
+    precioBase Double required
+    precioTotal Double
+    tipoIva TipoIva
+	tipoProducto TipoProducto
+
+}
+
+entity Empleado{
+	nombre String required
+    documento String unique required maxlength(10)
+    direccion String required
+    email String required
+    telefono String required
+    cargo Cargo required
+    codigoSU String
+    activo Boolean 
+}
+
+entity Venta {
+	numeroFactura Integer max(8)
+	fecha LocalDate
+    total Double
+    tipoPago TipoPago required
+}
+
+entity Caja{
+	fecha LocalDate 
+    saldoInicial Double required
+    totalEfectivo Double 
+    totalTarjeta Double 
+    saldoTotal Double 
+    
+}
+
+entity Empresa {
+	nombre String
+    nif String
+    direccion String
+    telefono String
+}
+
+relationship ManyToOne {
+	Venta{cliente} to Cliente   
+    Venta{empleado} to Empleado
+    Venta{producto} to Producto
+    Caja{venta} to Venta
+    Caja{empleado} to Empleado
+}
+
+paginate all with pagination
+service all with serviceImpl
+dto * with mapstruct
