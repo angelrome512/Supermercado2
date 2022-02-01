@@ -13,7 +13,7 @@ public class VentaDTO implements Serializable {
 
     private Long id;
 
-    @Max(value = 8)
+    @Max(value = 99999999)
     private Integer numeroFactura;
 
     private LocalDate fecha;

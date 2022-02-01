@@ -32,7 +32,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="nombre">
             <span jhiTranslate="supermercadoApp.empleado.nombre">Nombre</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -62,9 +61,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let empleado of empleados; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/empleado', empleado.id, 'view']">{{ empleado.id }}</a>
-          </td>
           <td>{{ empleado.nombre }}</td>
           <td>{{ empleado.documento }}</td>
           <td>{{ empleado.direccion }}</td>
@@ -75,16 +71,6 @@
           <td>{{ empleado.activo }}</td>
           <td class="text-right">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/empleado', empleado.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
               <button
                 type="submit"
                 [routerLink]="['/empleado', empleado.id, 'edit']"

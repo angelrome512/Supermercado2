@@ -14,6 +14,7 @@ import { EmpleadoService } from 'app/entities/empleado/service/empleado.service'
 import { IProducto } from 'app/entities/producto/producto.model';
 import { ProductoService } from 'app/entities/producto/service/producto.service';
 import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
+import dayjs from 'dayjs/esm';
 
 @Component({
   selector: 'jhi-venta-update',
@@ -29,8 +30,8 @@ export class VentaUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    numeroFactura: [null, [Validators.max(8)]],
-    fecha: [],
+    numeroFactura: [null, [Validators.max(99999999)]],
+    fecha: [{ value: '', disabled: true }],
     total: [],
     tipoPago: [null, [Validators.required]],
     cliente: [],
@@ -49,8 +50,11 @@ export class VentaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ venta }) => {
+      if (venta.id === undefined) {
+        const today = dayjs().startOf('day');
+        venta.fecha = today;
+      }
       this.updateForm(venta);
-
       this.loadRelationshipsOptions();
     });
   }

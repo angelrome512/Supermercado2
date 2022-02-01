@@ -32,7 +32,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="documento">
             <span jhiTranslate="supermercadoApp.cliente.documento">Documento</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -56,9 +55,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/cliente', cliente.id, 'view']">{{ cliente.id }}</a>
-          </td>
           <td>{{ cliente.documento }}</td>
           <td>{{ cliente.nombre }}</td>
           <td>{{ cliente.direccion }}</td>
@@ -67,16 +63,6 @@
           <td jhiTranslate="{{ 'supermercadoApp.TipoCliente.' + cliente.tipoCliente }}">{{ cliente.tipoCliente }}</td>
           <td class="text-right">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/cliente', cliente.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
               <button
                 type="submit"
                 [routerLink]="['/cliente', cliente.id, 'edit']"
