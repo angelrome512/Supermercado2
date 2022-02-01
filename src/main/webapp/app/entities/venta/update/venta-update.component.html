@@ -99,12 +99,12 @@
               [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption"
               *ngFor="let clienteOption of clientesSharedCollection; trackBy: trackClienteById"
             >
-              {{ clienteOption.id }}
+              {{ clienteOption.documento }}
             </option>
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="form-control-label" jhiTranslate="supermercadoApp.venta.empleado" for="field_empleado">Empleado</label>
           <select class="form-control" id="field_empleado" data-cy="empleado" name="empleado" formControlName="empleado">
             <option [ngValue]="null"></option>
@@ -115,7 +115,7 @@
               {{ empleadoOption.id }}
             </option>
           </select>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="supermercadoApp.venta.producto" for="field_producto">Producto</label>
