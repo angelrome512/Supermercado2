@@ -1,0 +1,150 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-producto-heading" data-cy="ProductoCreateUpdateHeading" jhiTranslate="supermercado2App.producto.home.createOrEditLabel">
+        Create or edit a Producto
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.nombre" for="field_nombre">Nombre</label>
+          <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+          <div *ngIf="editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.cantidad" for="field_cantidad">Cantidad</label>
+          <input type="number" class="form-control" name="cantidad" id="field_cantidad" data-cy="cantidad" formControlName="cantidad" />
+          <div *ngIf="editForm.get('cantidad')!.invalid && (editForm.get('cantidad')!.dirty || editForm.get('cantidad')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cantidad')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('cantidad')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.precioBase" for="field_precioBase">Precio Base</label>
+          <input
+            type="number"
+            class="form-control"
+            name="precioBase"
+            id="field_precioBase"
+            data-cy="precioBase"
+            formControlName="precioBase"
+          />
+          <div *ngIf="editForm.get('precioBase')!.invalid && (editForm.get('precioBase')!.dirty || editForm.get('precioBase')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('precioBase')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('precioBase')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.precioTotal" for="field_precioTotal"
+            >Precio Total</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="precioTotal"
+            id="field_precioTotal"
+            data-cy="precioTotal"
+            formControlName="precioTotal"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.tipoIva" for="field_tipoIva">Tipo Iva</label>
+          <select class="form-control" name="tipoIva" formControlName="tipoIva" id="field_tipoIva" data-cy="tipoIva">
+            <option [ngValue]="null">{{ 'supermercado2App.TipoIva.null' | translate }}</option>
+            <option *ngFor="let tipoIva of tipoIvaValues" [value]="tipoIva">{{ 'supermercado2App.TipoIva.' + tipoIva | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.tipoProducto" for="field_tipoProducto"
+            >Tipo Producto</label
+          >
+          <select class="form-control" name="tipoProducto" formControlName="tipoProducto" id="field_tipoProducto" data-cy="tipoProducto">
+            <option [ngValue]="null">{{ 'supermercado2App.TipoProducto.null' | translate }}</option>
+            <option *ngFor="let tipoProducto of tipoProductoValues" [value]="tipoProducto">
+              {{ 'supermercado2App.TipoProducto.' + tipoProducto | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.producto.venta" for="field_venta">Venta</label>
+          <select class="form-control" id="field_venta" data-cy="venta" name="venta" formControlName="venta">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="ventaOption.id === editForm.get('venta')!.value?.id ? editForm.get('venta')!.value : ventaOption"
+              *ngFor="let ventaOption of ventasSharedCollection; trackBy: trackVentaById"
+            >
+              {{ ventaOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

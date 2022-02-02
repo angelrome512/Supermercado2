@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Supermercado2App<supermercado-2>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.mycompany.myapp.Supermercado2App",
+            "projectName": "supermercado-2",
+            "args": ""
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="producto">
+      <h2 data-cy="productoDetailsHeading"><span jhiTranslate="supermercado2App.producto.detail.title">Producto</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ producto.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ producto.codigo }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.nombre">Nombre</span></dt>
+        <dd>
+          <span>{{ producto.nombre }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.cantidad">Cantidad</span></dt>
+        <dd>
+          <span>{{ producto.cantidad }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.precioBase">Precio Base</span></dt>
+        <dd>
+          <span>{{ producto.precioBase }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.precioTotal">Precio Total</span></dt>
+        <dd>
+          <span>{{ producto.precioTotal }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.tipoIva">Tipo Iva</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'supermercado2App.TipoIva.' + producto.tipoIva }}">{{ producto.tipoIva }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.tipoProducto">Tipo Producto</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'supermercado2App.TipoProducto.' + producto.tipoProducto }}">{{ producto.tipoProducto }}</span>
+        </dd>
+        <dt><span jhiTranslate="supermercado2App.producto.venta">Venta</span></dt>
+        <dd>
+          <div *ngIf="producto.venta">
+            <a [routerLink]="['/venta', producto.venta?.id, 'view']">{{ producto.venta?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/producto', producto.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

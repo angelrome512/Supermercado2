@@ -1,0 +1,9 @@
+{
+  "supermercado2App": {
+    "TipoCliente": {
+      "null": "",
+      "PARTICULAR": "PARTICULAR",
+      "EMPRESA": "EMPRESA"
+    }
+  }
+}

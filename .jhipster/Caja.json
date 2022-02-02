@@ -1,0 +1,50 @@
+{
+  "name": "Caja",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "saldoInicial",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "totalEfectivo",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "totalTarjeta",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "saldoTotal",
+      "fieldType": "Double"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "venta",
+      "otherEntityRelationshipName": "caja",
+      "relationshipName": "venta"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "empleado",
+      "otherEntityRelationshipName": "caja",
+      "relationshipName": "empleado"
+    }
+  ],
+  "entityTableName": "caja",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220202105703"
+}

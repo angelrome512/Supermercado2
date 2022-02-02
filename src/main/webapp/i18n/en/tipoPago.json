@@ -1,0 +1,9 @@
+{
+  "supermercado2App": {
+    "TipoPago": {
+      "null": "",
+      "TARJETA": "TARJETA",
+      "EFECTIVO": "EFECTIVO"
+    }
+  }
+}

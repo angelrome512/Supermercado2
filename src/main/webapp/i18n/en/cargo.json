@@ -1,0 +1,10 @@
+{
+  "supermercado2App": {
+    "Cargo": {
+      "null": "",
+      "CAJERO": "CAJERO",
+      "SUPERVISOR": "SUPERVISOR",
+      "GERENTE": "GERENTE"
+    }
+  }
+}
