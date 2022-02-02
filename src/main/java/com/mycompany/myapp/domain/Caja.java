@@ -3,6 +3,8 @@ package com.mycompany.myapp.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -40,11 +42,12 @@ public class Caja implements Serializable {
     private Double saldoTotal;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "productos", "cliente", "empleado" }, allowSetters = true)
-    private Venta venta;
-
-    @ManyToOne
     private Empleado empleado;
+
+    @OneToMany(mappedBy = "caja")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "productos", "cliente", "empleado", "caja" }, allowSetters = true)
+    private Set<Venta> ventas = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -126,19 +129,6 @@ public class Caja implements Serializable {
         this.saldoTotal = saldoTotal;
     }
 
-    public Venta getVenta() {
-        return this.venta;
-    }
-
-    public void setVenta(Venta venta) {
-        this.venta = venta;
-    }
-
-    public Caja venta(Venta venta) {
-        this.setVenta(venta);
-        return this;
-    }
-
     public Empleado getEmpleado() {
         return this.empleado;
     }
@@ -149,6 +139,37 @@ public class Caja implements Serializable {
 
     public Caja empleado(Empleado empleado) {
         this.setEmpleado(empleado);
+        return this;
+    }
+
+    public Set<Venta> getVentas() {
+        return this.ventas;
+    }
+
+    public void setVentas(Set<Venta> ventas) {
+        if (this.ventas != null) {
+            this.ventas.forEach(i -> i.setCaja(null));
+        }
+        if (ventas != null) {
+            ventas.forEach(i -> i.setCaja(this));
+        }
+        this.ventas = ventas;
+    }
+
+    public Caja ventas(Set<Venta> ventas) {
+        this.setVentas(ventas);
+        return this;
+    }
+
+    public Caja addVenta(Venta venta) {
+        this.ventas.add(venta);
+        venta.setCaja(this);
+        return this;
+    }
+
+    public Caja removeVenta(Venta venta) {
+        this.ventas.remove(venta);
+        venta.setCaja(null);
         return this;
     }
 

@@ -116,6 +116,19 @@
             </option>
           </select>
         </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="supermercado2App.venta.caja" for="field_caja">Caja</label>
+          <select class="form-control" id="field_caja" data-cy="caja" name="caja" formControlName="caja">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="cajaOption.id === editForm.get('caja')!.value?.id ? editForm.get('caja')!.value : cajaOption"
+              *ngFor="let cajaOption of cajasSharedCollection; trackBy: trackCajaById"
+            >
+              {{ cajaOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

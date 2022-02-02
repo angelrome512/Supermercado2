@@ -24,7 +24,8 @@
       "tipoPago": "Tipo Pago",
       "producto": "Producto",
       "cliente": "Cliente",
-      "empleado": "Empleado"
+      "empleado": "Empleado",
+      "caja": "Caja"
     }
   }
 }

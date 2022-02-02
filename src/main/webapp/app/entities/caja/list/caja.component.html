@@ -48,9 +48,6 @@
           <th scope="col" jhiSortBy="saldoTotal">
             <span jhiTranslate="supermercado2App.caja.saldoTotal">Saldo Total</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="venta.id">
-            <span jhiTranslate="supermercado2App.caja.venta">Venta</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col" jhiSortBy="empleado.id">
             <span jhiTranslate="supermercado2App.caja.empleado">Empleado</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -67,11 +64,6 @@
           <td>{{ caja.totalEfectivo }}</td>
           <td>{{ caja.totalTarjeta }}</td>
           <td>{{ caja.saldoTotal }}</td>
-          <td>
-            <div *ngIf="caja.venta">
-              <a [routerLink]="['/venta', caja.venta?.id, 'view']">{{ caja.venta?.id }}</a>
-            </div>
-          </td>
           <td>
             <div *ngIf="caja.empleado">
               <a [routerLink]="['/empleado', caja.empleado?.id, 'view']">{{ caja.empleado?.id }}</a>

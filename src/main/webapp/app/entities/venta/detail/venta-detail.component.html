@@ -42,6 +42,12 @@
             <a [routerLink]="['/empleado', venta.empleado?.id, 'view']">{{ venta.empleado?.id }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="supermercado2App.venta.caja">Caja</span></dt>
+        <dd>
+          <div *ngIf="venta.caja">
+            <a [routerLink]="['/caja', venta.caja?.id, 'view']">{{ venta.caja?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

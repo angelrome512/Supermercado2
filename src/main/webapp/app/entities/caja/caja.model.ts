@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
-import { IVenta } from 'app/entities/venta/venta.model';
 import { IEmpleado } from 'app/entities/empleado/empleado.model';
+import { IVenta } from 'app/entities/venta/venta.model';
 
 export interface ICaja {
   id?: number;
@@ -9,8 +9,8 @@ export interface ICaja {
   totalEfectivo?: number | null;
   totalTarjeta?: number | null;
   saldoTotal?: number | null;
-  venta?: IVenta | null;
   empleado?: IEmpleado | null;
+  ventas?: IVenta[] | null;
 }
 
 export class Caja implements ICaja {
@@ -21,8 +21,8 @@ export class Caja implements ICaja {
     public totalEfectivo?: number | null,
     public totalTarjeta?: number | null,
     public saldoTotal?: number | null,
-    public venta?: IVenta | null,
-    public empleado?: IEmpleado | null
+    public empleado?: IEmpleado | null,
+    public ventas?: IVenta[] | null
   ) {}
 }
 

@@ -34,12 +34,6 @@
         <dd>
           <span>{{ caja.saldoTotal }}</span>
         </dd>
-        <dt><span jhiTranslate="supermercado2App.caja.venta">Venta</span></dt>
-        <dd>
-          <div *ngIf="caja.venta">
-            <a [routerLink]="['/venta', caja.venta?.id, 'view']">{{ caja.venta?.id }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="supermercado2App.caja.empleado">Empleado</span></dt>
         <dd>
           <div *ngIf="caja.empleado">

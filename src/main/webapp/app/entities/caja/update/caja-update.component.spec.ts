@@ -8,8 +8,6 @@ import { of, Subject, from } from 'rxjs';
 
 import { CajaService } from '../service/caja.service';
 import { ICaja, Caja } from '../caja.model';
-import { IVenta } from 'app/entities/venta/venta.model';
-import { VentaService } from 'app/entities/venta/service/venta.service';
 import { IEmpleado } from 'app/entities/empleado/empleado.model';
 import { EmpleadoService } from 'app/entities/empleado/service/empleado.service';
 
@@ -20,7 +18,6 @@ describe('Caja Management Update Component', () => {
   let fixture: ComponentFixture<CajaUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let cajaService: CajaService;
-  let ventaService: VentaService;
   let empleadoService: EmpleadoService;
 
   beforeEach(() => {
@@ -43,32 +40,12 @@ describe('Caja Management Update Component', () => {
     fixture = TestBed.createComponent(CajaUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     cajaService = TestBed.inject(CajaService);
-    ventaService = TestBed.inject(VentaService);
     empleadoService = TestBed.inject(EmpleadoService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Venta query and add missing value', () => {
-      const caja: ICaja = { id: 456 };
-      const venta: IVenta = { id: 86214 };
-      caja.venta = venta;
-
-      const ventaCollection: IVenta[] = [{ id: 17625 }];
-      jest.spyOn(ventaService, 'query').mockReturnValue(of(new HttpResponse({ body: ventaCollection })));
-      const additionalVentas = [venta];
-      const expectedCollection: IVenta[] = [...additionalVentas, ...ventaCollection];
-      jest.spyOn(ventaService, 'addVentaToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ caja });
-      comp.ngOnInit();
-
-      expect(ventaService.query).toHaveBeenCalled();
-      expect(ventaService.addVentaToCollectionIfMissing).toHaveBeenCalledWith(ventaCollection, ...additionalVentas);
-      expect(comp.ventasSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Empleado query and add missing value', () => {
       const caja: ICaja = { id: 456 };
       const empleado: IEmpleado = { id: 84115 };
@@ -90,8 +67,6 @@ describe('Caja Management Update Component', () => {
 
     it('Should update editForm', () => {
       const caja: ICaja = { id: 456 };
-      const venta: IVenta = { id: 5610 };
-      caja.venta = venta;
       const empleado: IEmpleado = { id: 99490 };
       caja.empleado = empleado;
 
@@ -99,7 +74,6 @@ describe('Caja Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(caja));
-      expect(comp.ventasSharedCollection).toContain(venta);
       expect(comp.empleadosSharedCollection).toContain(empleado);
     });
   });
@@ -169,14 +143,6 @@ describe('Caja Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
-    describe('trackVentaById', () => {
-      it('Should return tracked Venta primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackVentaById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
     describe('trackEmpleadoById', () => {
       it('Should return tracked Empleado primary key', () => {
         const entity = { id: 123 };

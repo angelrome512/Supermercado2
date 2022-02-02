@@ -26,15 +26,15 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "venta",
-      "otherEntityRelationshipName": "caja",
-      "relationshipName": "venta"
-    },
-    {
-      "relationshipType": "many-to-one",
       "otherEntityName": "empleado",
       "otherEntityRelationshipName": "caja",
       "relationshipName": "empleado"
+    },
+    {
+      "relationshipName": "venta",
+      "otherEntityName": "venta",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "caja"
     }
   ],
   "entityTableName": "caja",

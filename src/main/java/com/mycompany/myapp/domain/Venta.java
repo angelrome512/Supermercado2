@@ -52,6 +52,10 @@ public class Venta implements Serializable {
     @ManyToOne
     private Empleado empleado;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "empleado", "ventas" }, allowSetters = true)
+    private Caja caja;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -173,6 +177,19 @@ public class Venta implements Serializable {
 
     public Venta empleado(Empleado empleado) {
         this.setEmpleado(empleado);
+        return this;
+    }
+
+    public Caja getCaja() {
+        return this.caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+
+    public Venta caja(Caja caja) {
+        this.setCaja(caja);
         return this;
     }
 

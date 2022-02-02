@@ -12,6 +12,8 @@ import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { IEmpleado } from 'app/entities/empleado/empleado.model';
 import { EmpleadoService } from 'app/entities/empleado/service/empleado.service';
+import { ICaja } from 'app/entities/caja/caja.model';
+import { CajaService } from 'app/entities/caja/service/caja.service';
 
 import { VentaUpdateComponent } from './venta-update.component';
 
@@ -22,6 +24,7 @@ describe('Venta Management Update Component', () => {
   let ventaService: VentaService;
   let clienteService: ClienteService;
   let empleadoService: EmpleadoService;
+  let cajaService: CajaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,6 +48,7 @@ describe('Venta Management Update Component', () => {
     ventaService = TestBed.inject(VentaService);
     clienteService = TestBed.inject(ClienteService);
     empleadoService = TestBed.inject(EmpleadoService);
+    cajaService = TestBed.inject(CajaService);
 
     comp = fixture.componentInstance;
   });
@@ -88,12 +92,33 @@ describe('Venta Management Update Component', () => {
       expect(comp.empleadosSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Caja query and add missing value', () => {
+      const venta: IVenta = { id: 456 };
+      const caja: ICaja = { id: 32535 };
+      venta.caja = caja;
+
+      const cajaCollection: ICaja[] = [{ id: 37632 }];
+      jest.spyOn(cajaService, 'query').mockReturnValue(of(new HttpResponse({ body: cajaCollection })));
+      const additionalCajas = [caja];
+      const expectedCollection: ICaja[] = [...additionalCajas, ...cajaCollection];
+      jest.spyOn(cajaService, 'addCajaToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ venta });
+      comp.ngOnInit();
+
+      expect(cajaService.query).toHaveBeenCalled();
+      expect(cajaService.addCajaToCollectionIfMissing).toHaveBeenCalledWith(cajaCollection, ...additionalCajas);
+      expect(comp.cajasSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const venta: IVenta = { id: 456 };
       const cliente: ICliente = { id: 11625 };
       venta.cliente = cliente;
       const empleado: IEmpleado = { id: 17057 };
       venta.empleado = empleado;
+      const caja: ICaja = { id: 12875 };
+      venta.caja = caja;
 
       activatedRoute.data = of({ venta });
       comp.ngOnInit();
@@ -101,6 +126,7 @@ describe('Venta Management Update Component', () => {
       expect(comp.editForm.value).toEqual(expect.objectContaining(venta));
       expect(comp.clientesSharedCollection).toContain(cliente);
       expect(comp.empleadosSharedCollection).toContain(empleado);
+      expect(comp.cajasSharedCollection).toContain(caja);
     });
   });
 
@@ -181,6 +207,14 @@ describe('Venta Management Update Component', () => {
       it('Should return tracked Empleado primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackEmpleadoById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackCajaById', () => {
+      it('Should return tracked Caja primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackCajaById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

@@ -23,8 +23,8 @@
       "totalEfectivo": "Total Efectivo",
       "totalTarjeta": "Total Tarjeta",
       "saldoTotal": "Saldo Total",
-      "venta": "Venta",
-      "empleado": "Empleado"
+      "empleado": "Empleado",
+      "venta": "Venta"
     }
   }
 }

@@ -51,6 +51,9 @@
           <th scope="col" jhiSortBy="empleado.id">
             <span jhiTranslate="supermercado2App.venta.empleado">Empleado</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="caja.id">
+            <span jhiTranslate="supermercado2App.venta.caja">Caja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -71,6 +74,11 @@
           <td>
             <div *ngIf="venta.empleado">
               <a [routerLink]="['/empleado', venta.empleado?.id, 'view']">{{ venta.empleado?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="venta.caja">
+              <a [routerLink]="['/caja', venta.caja?.id, 'view']">{{ venta.caja?.id }}</a>
             </div>
           </td>
           <td class="text-right">

@@ -11,6 +11,8 @@ import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { IEmpleado } from 'app/entities/empleado/empleado.model';
 import { EmpleadoService } from 'app/entities/empleado/service/empleado.service';
+import { ICaja } from 'app/entities/caja/caja.model';
+import { CajaService } from 'app/entities/caja/service/caja.service';
 import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
 
 @Component({
@@ -23,6 +25,7 @@ export class VentaUpdateComponent implements OnInit {
 
   clientesSharedCollection: ICliente[] = [];
   empleadosSharedCollection: IEmpleado[] = [];
+  cajasSharedCollection: ICaja[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -32,12 +35,14 @@ export class VentaUpdateComponent implements OnInit {
     tipoPago: [null, [Validators.required]],
     cliente: [],
     empleado: [],
+    caja: [],
   });
 
   constructor(
     protected ventaService: VentaService,
     protected clienteService: ClienteService,
     protected empleadoService: EmpleadoService,
+    protected cajaService: CajaService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -72,6 +77,10 @@ export class VentaUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  trackCajaById(index: number, item: ICaja): number {
+    return item.id!;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IVenta>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -100,10 +109,12 @@ export class VentaUpdateComponent implements OnInit {
       tipoPago: venta.tipoPago,
       cliente: venta.cliente,
       empleado: venta.empleado,
+      caja: venta.caja,
     });
 
     this.clientesSharedCollection = this.clienteService.addClienteToCollectionIfMissing(this.clientesSharedCollection, venta.cliente);
     this.empleadosSharedCollection = this.empleadoService.addEmpleadoToCollectionIfMissing(this.empleadosSharedCollection, venta.empleado);
+    this.cajasSharedCollection = this.cajaService.addCajaToCollectionIfMissing(this.cajasSharedCollection, venta.caja);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -124,6 +135,12 @@ export class VentaUpdateComponent implements OnInit {
         )
       )
       .subscribe((empleados: IEmpleado[]) => (this.empleadosSharedCollection = empleados));
+
+    this.cajaService
+      .query()
+      .pipe(map((res: HttpResponse<ICaja[]>) => res.body ?? []))
+      .pipe(map((cajas: ICaja[]) => this.cajaService.addCajaToCollectionIfMissing(cajas, this.editForm.get('caja')!.value)))
+      .subscribe((cajas: ICaja[]) => (this.cajasSharedCollection = cajas));
   }
 
   protected createFromForm(): IVenta {
@@ -136,6 +153,7 @@ export class VentaUpdateComponent implements OnInit {
       tipoPago: this.editForm.get(['tipoPago'])!.value,
       cliente: this.editForm.get(['cliente'])!.value,
       empleado: this.editForm.get(['empleado'])!.value,
+      caja: this.editForm.get(['caja'])!.value,
     };
   }
 }

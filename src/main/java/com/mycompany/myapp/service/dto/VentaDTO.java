@@ -27,6 +27,8 @@ public class VentaDTO implements Serializable {
 
     private EmpleadoDTO empleado;
 
+    private CajaDTO caja;
+
     public Long getId() {
         return id;
     }
@@ -83,6 +85,14 @@ public class VentaDTO implements Serializable {
         this.empleado = empleado;
     }
 
+    public CajaDTO getCaja() {
+        return caja;
+    }
+
+    public void setCaja(CajaDTO caja) {
+        this.caja = caja;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -115,6 +125,7 @@ public class VentaDTO implements Serializable {
             ", tipoPago='" + getTipoPago() + "'" +
             ", cliente=" + getCliente() +
             ", empleado=" + getEmpleado() +
+            ", caja=" + getCaja() +
             "}";
     }
 }

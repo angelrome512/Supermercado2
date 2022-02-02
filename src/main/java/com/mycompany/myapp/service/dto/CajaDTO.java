@@ -23,8 +23,6 @@ public class CajaDTO implements Serializable {
 
     private Double saldoTotal;
 
-    private VentaDTO venta;
-
     private EmpleadoDTO empleado;
 
     public Long getId() {
@@ -75,14 +73,6 @@ public class CajaDTO implements Serializable {
         this.saldoTotal = saldoTotal;
     }
 
-    public VentaDTO getVenta() {
-        return venta;
-    }
-
-    public void setVenta(VentaDTO venta) {
-        this.venta = venta;
-    }
-
     public EmpleadoDTO getEmpleado() {
         return empleado;
     }
@@ -122,7 +112,6 @@ public class CajaDTO implements Serializable {
             ", totalEfectivo=" + getTotalEfectivo() +
             ", totalTarjeta=" + getTotalTarjeta() +
             ", saldoTotal=" + getSaldoTotal() +
-            ", venta=" + getVenta() +
             ", empleado=" + getEmpleado() +
             "}";
     }

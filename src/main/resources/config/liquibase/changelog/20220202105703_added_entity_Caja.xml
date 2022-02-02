@@ -29,9 +29,6 @@
             <column name="saldo_total" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="venta_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="empleado_id" type="bigint">
                 <constraints nullable="true" />
             </column>

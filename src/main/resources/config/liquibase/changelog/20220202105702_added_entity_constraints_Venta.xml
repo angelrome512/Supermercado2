@@ -19,5 +19,11 @@
                                  constraintName="fk_venta__empleado_id"
                                  referencedColumnNames="id"
                                  referencedTableName="empleado"/>
+
+        <addForeignKeyConstraint baseColumnNames="caja_id"
+                                 baseTableName="venta"
+                                 constraintName="fk_venta__caja_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="caja"/>
     </changeSet>
 </databaseChangeLog>

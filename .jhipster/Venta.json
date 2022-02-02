@@ -40,6 +40,12 @@
       "otherEntityName": "empleado",
       "otherEntityRelationshipName": "venta",
       "relationshipName": "empleado"
+    },
+    {
+      "relationshipName": "caja",
+      "otherEntityName": "caja",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id"
     }
   ],
   "entityTableName": "venta",

@@ -7,8 +7,6 @@ import { finalize, map } from 'rxjs/operators';
 
 import { ICaja, Caja } from '../caja.model';
 import { CajaService } from '../service/caja.service';
-import { IVenta } from 'app/entities/venta/venta.model';
-import { VentaService } from 'app/entities/venta/service/venta.service';
 import { IEmpleado } from 'app/entities/empleado/empleado.model';
 import { EmpleadoService } from 'app/entities/empleado/service/empleado.service';
 
@@ -19,7 +17,6 @@ import { EmpleadoService } from 'app/entities/empleado/service/empleado.service'
 export class CajaUpdateComponent implements OnInit {
   isSaving = false;
 
-  ventasSharedCollection: IVenta[] = [];
   empleadosSharedCollection: IEmpleado[] = [];
 
   editForm = this.fb.group({
@@ -29,13 +26,11 @@ export class CajaUpdateComponent implements OnInit {
     totalEfectivo: [],
     totalTarjeta: [],
     saldoTotal: [],
-    venta: [],
     empleado: [],
   });
 
   constructor(
     protected cajaService: CajaService,
-    protected ventaService: VentaService,
     protected empleadoService: EmpleadoService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -61,10 +56,6 @@ export class CajaUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.cajaService.create(caja));
     }
-  }
-
-  trackVentaById(index: number, item: IVenta): number {
-    return item.id!;
   }
 
   trackEmpleadoById(index: number, item: IEmpleado): number {
@@ -98,21 +89,13 @@ export class CajaUpdateComponent implements OnInit {
       totalEfectivo: caja.totalEfectivo,
       totalTarjeta: caja.totalTarjeta,
       saldoTotal: caja.saldoTotal,
-      venta: caja.venta,
       empleado: caja.empleado,
     });
 
-    this.ventasSharedCollection = this.ventaService.addVentaToCollectionIfMissing(this.ventasSharedCollection, caja.venta);
     this.empleadosSharedCollection = this.empleadoService.addEmpleadoToCollectionIfMissing(this.empleadosSharedCollection, caja.empleado);
   }
 
   protected loadRelationshipsOptions(): void {
-    this.ventaService
-      .query()
-      .pipe(map((res: HttpResponse<IVenta[]>) => res.body ?? []))
-      .pipe(map((ventas: IVenta[]) => this.ventaService.addVentaToCollectionIfMissing(ventas, this.editForm.get('venta')!.value)))
-      .subscribe((ventas: IVenta[]) => (this.ventasSharedCollection = ventas));
-
     this.empleadoService
       .query()
       .pipe(map((res: HttpResponse<IEmpleado[]>) => res.body ?? []))
@@ -133,7 +116,6 @@ export class CajaUpdateComponent implements OnInit {
       totalEfectivo: this.editForm.get(['totalEfectivo'])!.value,
       totalTarjeta: this.editForm.get(['totalTarjeta'])!.value,
       saldoTotal: this.editForm.get(['saldoTotal'])!.value,
-      venta: this.editForm.get(['venta'])!.value,
       empleado: this.editForm.get(['empleado'])!.value,
     };
   }
