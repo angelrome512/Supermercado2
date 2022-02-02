@@ -2,6 +2,7 @@ package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Venta;
 import com.mycompany.myapp.repository.VentaRepository;
+import com.mycompany.myapp.service.ProductoService;
 import com.mycompany.myapp.service.VentaService;
 import com.mycompany.myapp.service.dto.VentaDTO;
 import com.mycompany.myapp.service.mapper.VentaMapper;
@@ -26,9 +27,12 @@ public class VentaServiceImpl implements VentaService {
 
     private final VentaMapper ventaMapper;
 
-    public VentaServiceImpl(VentaRepository ventaRepository, VentaMapper ventaMapper) {
+    private final ProductoService productoService;
+
+    public VentaServiceImpl(VentaRepository ventaRepository, VentaMapper ventaMapper, ProductoService productoService) {
         this.ventaRepository = ventaRepository;
         this.ventaMapper = ventaMapper;
+        this.productoService = productoService;
     }
 
     @Override

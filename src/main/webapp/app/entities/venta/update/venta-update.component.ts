@@ -12,6 +12,9 @@ import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { IEmpleado } from 'app/entities/empleado/empleado.model';
 import { EmpleadoService } from 'app/entities/empleado/service/empleado.service';
 import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
+import { IProducto, Producto } from 'app/entities/producto/producto.model';
+import { ProductoService } from 'app/entities/producto/service/producto.service';
+import dayjs from 'dayjs/esm';
 
 @Component({
   selector: 'jhi-venta-update',
@@ -20,18 +23,25 @@ import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
 export class VentaUpdateComponent implements OnInit {
   isSaving = false;
   tipoPagoValues = Object.keys(TipoPago);
+  searchProducto = '';
+  productos: Producto[] = [];
+  ventas?: IVenta;
+  cantidadProducto = 1;
+  preciosTotal = 0.0;
 
   clientesSharedCollection: ICliente[] = [];
   empleadosSharedCollection: IEmpleado[] = [];
+  productosSharedCollection: IProducto[] = [];
 
   editForm = this.fb.group({
     id: [],
     numeroFactura: [null, [Validators.max(8)]],
-    fecha: [],
+    fecha: [{ value: '', disabled: true }],
     total: [],
     tipoPago: [null, [Validators.required]],
     cliente: [],
     empleado: [],
+    productos: [],
   });
 
   constructor(
@@ -39,15 +49,45 @@ export class VentaUpdateComponent implements OnInit {
     protected clienteService: ClienteService,
     protected empleadoService: EmpleadoService,
     protected activatedRoute: ActivatedRoute,
+    protected productoService: ProductoService,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ venta }) => {
+      if (venta.id === undefined) {
+        const today = dayjs().startOf('day');
+        venta.fecha = today;
+      }
+
       this.updateForm(venta);
 
       this.loadRelationshipsOptions();
     });
+  }
+
+  searchProductos(): void {
+    if (this.searchProducto !== '') {
+      this.productoService.findByCodigo(this.searchProducto).subscribe({
+        next: (res: HttpResponse<IProducto[]>) => {
+          this.productosSharedCollection = res.body ?? [];
+        },
+      });
+    }
+  }
+
+  trackId(index: number, item: IProducto): number {
+    return item.id!;
+  }
+
+  addProduct(productoOption: IProducto): void {
+    this.productos.push(productoOption);
+  }
+
+  precioTotalVenta(): void {
+    if (this.cantidadProducto !== 0) {
+      this.preciosTotal = this.preciosTotal * this.cantidadProducto;
+    }
   }
 
   previousState(): void {
@@ -100,6 +140,7 @@ export class VentaUpdateComponent implements OnInit {
       tipoPago: venta.tipoPago,
       cliente: venta.cliente,
       empleado: venta.empleado,
+      productos: venta.productos,
     });
 
     this.clientesSharedCollection = this.clienteService.addClienteToCollectionIfMissing(this.clientesSharedCollection, venta.cliente);
@@ -136,6 +177,7 @@ export class VentaUpdateComponent implements OnInit {
       tipoPago: this.editForm.get(['tipoPago'])!.value,
       cliente: this.editForm.get(['cliente'])!.value,
       empleado: this.editForm.get(['empleado'])!.value,
+      productos: this.editForm.get(['productos'])!.value,
     };
   }
 }

@@ -39,6 +39,11 @@ export class ProductoService {
     return this.http.get<IProducto[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  findByCodigo(codigo: string, pageable?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(pageable);
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/by-codigo/${codigo}`, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

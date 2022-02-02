@@ -47,4 +47,12 @@ public interface ProductoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get to simple search the producto by codigo.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<ProductoDTO> findAllByCodigo(String codigo, Pageable pageable);
 }
