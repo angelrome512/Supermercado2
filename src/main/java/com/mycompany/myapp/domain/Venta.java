@@ -26,7 +26,7 @@ public class Venta implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Max(value = 8)
+    @Max(value = 99999999)
     @Column(name = "numero_factura")
     private Integer numeroFactura;
 

@@ -34,9 +34,9 @@
               class="form-text text-danger"
               *ngIf="editForm.get('numeroFactura')?.errors?.max"
               jhiTranslate="entity.validation.max"
-              [translateValues]="{ max: 8 }"
+              [translateValues]="{ max: 99999999 }"
             >
-              This field cannot be more than 8.
+              This field cannot be more than 99999999.
             </small>
             <small
               class="form-text text-danger"
