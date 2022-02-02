@@ -152,6 +152,25 @@ public class ProductoResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    /* SPECIFICATION */
+    /**
+     * {@code GET  /productos/searchingParam} : get all the productos.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of coches in body.
+     */
+    @GetMapping("/productos/searchingParam")
+    public ResponseEntity<List<ProductoDTO>> findAllBySimpleSearch(
+        Pageable pageable,
+        @RequestParam(required = false, defaultValue = "") String filter
+    ) throws InterruptedException, URISyntaxException {
+        log.debug("REST request to get a page of Coches");
+        filter = !filter.equals("undefined") ? filter : "%";
+        Page<ProductoDTO> page = productoService.findAllBySearchingParam(filter, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /productos/:id} : get the "id" producto.
      *

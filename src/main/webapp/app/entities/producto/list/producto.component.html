@@ -2,6 +2,14 @@
   <h2 id="page-heading" data-cy="ProductoHeading">
     <span jhiTranslate="supermercado2App.producto.home.title">Productos</span>
 
+    <input
+      type="text"
+      [(ngModel)]="searchString"
+      (ngModelChange)="searchingByAtributos()"
+      placeholder="Busqueda"
+      style="font-size: 20px; text-align: left; margin-right: 10px"
+    />
+
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>

@@ -23,6 +23,7 @@ export class ClienteComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  searchString = '';
 
   constructor(
     protected clienteService: ClienteService,
@@ -55,6 +56,28 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+  }
+
+  searchingByAtributos(page?: number, dontNavigate?: boolean): void {
+    this.isLoading = true;
+    const pageToLoad: number = page ?? this.page ?? 1;
+
+    this.clienteService
+      .simpleSearch(this.searchString, {
+        page: pageToLoad - 1,
+        size: this.itemsPerPage,
+        sort: this.sort(),
+      })
+      .subscribe({
+        next: (res: HttpResponse<ICliente[]>) => {
+          this.isLoading = false;
+          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+        },
+        error: () => {
+          this.isLoading = false;
+          this.onError();
+        },
+      });
   }
 
   trackId(index: number, item: ICliente): number {

@@ -23,6 +23,7 @@ export class ProductoComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  searchString = '';
 
   constructor(
     protected productoService: ProductoService,
@@ -55,6 +56,28 @@ export class ProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+  }
+
+  searchingByAtributos(page?: number, dontNavigate?: boolean): void {
+    this.isLoading = true;
+    const pageToLoad: number = page ?? this.page ?? 1;
+
+    this.productoService
+      .simpleSearch(this.searchString, {
+        page: pageToLoad - 1,
+        size: this.itemsPerPage,
+        sort: this.sort(),
+      })
+      .subscribe({
+        next: (res: HttpResponse<IProducto[]>) => {
+          this.isLoading = false;
+          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+        },
+        error: () => {
+          this.isLoading = false;
+          this.onError();
+        },
+      });
   }
 
   trackId(index: number, item: IProducto): number {
