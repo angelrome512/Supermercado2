@@ -24,7 +24,8 @@
       "tipoPago": "Tipo Pago",
       "cliente": "Cliente",
       "empleado": "Empleado",
-      "producto": "Producto"
+      "producto": "Producto",
+      "anular": "Anulada"
     }
   }
 }

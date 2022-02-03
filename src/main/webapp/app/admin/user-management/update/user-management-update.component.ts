@@ -33,6 +33,9 @@ export class UserManagementUpdateComponent implements OnInit {
     activated: [],
     langKey: [],
     authorities: [],
+    documento: [],
+    direccion: [],
+    telefono: [],
   });
 
   constructor(private userService: UserManagementService, private route: ActivatedRoute, private fb: FormBuilder) {}
@@ -80,6 +83,9 @@ export class UserManagementUpdateComponent implements OnInit {
       activated: user.activated,
       langKey: user.langKey,
       authorities: user.authorities,
+      documento: user.documento,
+      direccion: user.direccion,
+      telefono: user.telefono,
     });
   }
 
@@ -91,6 +97,9 @@ export class UserManagementUpdateComponent implements OnInit {
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
     user.authorities = this.editForm.get(['authorities'])!.value;
+    user.documento = this.editForm.get(['documento'])!.value;
+    user.direccion = this.editForm.get(['direccion'])!.value;
+    user.telefono = this.editForm.get(['telefono'])!.value;
   }
 
   private onSaveSuccess(): void {

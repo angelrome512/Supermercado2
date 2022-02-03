@@ -53,6 +53,9 @@
           <th scope="col" jhiSortBy="producto.id">
             <span jhiTranslate="supermercadoApp.venta.producto">Producto</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="anular">
+            <span jhiTranslate="supermercadoApp.venta.anular">Anular</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -76,6 +79,27 @@
             <div *ngIf="venta.producto">
               <a [routerLink]="['/producto', venta.producto?.id, 'view']">{{ venta.producto?.id }}</a>
             </div>
+          </td>
+          <td>
+            <ng-container [ngSwitch]="venta.anular">
+              <button
+                class="btn btn-danger btn-sm"
+                style="background-color: rgba(255, 0, 0, 0.432); color: azure"
+                (click)="setActive(venta, true)"
+                *ngSwitchCase="false"
+                jhiTranslate="supermercadoApp.venta.anular"
+              >
+                Anulada
+              </button>
+              <button
+                class="btn btn-success btn-sm"
+                (click)="setActive(venta, false)"
+                *ngSwitchCase="true"
+                jhiTranslate="userManagement.activated"
+              >
+                Activated
+              </button>
+            </ng-container>
           </td>
           <td class="text-right">
             <div class="btn-group">

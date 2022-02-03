@@ -11,6 +11,9 @@ export interface IUser {
   createdDate?: Date;
   lastModifiedBy?: string;
   lastModifiedDate?: Date;
+  documento?: string | null;
+  direccion?: string | null;
+  telefono?: string | null;
 }
 
 export class User implements IUser {
@@ -26,6 +29,9 @@ export class User implements IUser {
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,
-    public lastModifiedDate?: Date
+    public lastModifiedDate?: Date,
+    public documento?: string | null,
+    public direccion?: string | null,
+    public telefono?: string | null
   ) {}
 }

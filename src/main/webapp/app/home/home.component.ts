@@ -13,6 +13,7 @@ import { Account } from 'app/core/auth/account.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  isNavbarCollapsed: boolean | null = null;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -27,6 +28,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  collapseNavbar(): void {
+    this.isNavbarCollapsed = true;
   }
 
   ngOnDestroy(): void {

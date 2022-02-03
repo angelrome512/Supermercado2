@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {}
+public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
+    @Query("SELECT e FROM Empleado e JOIN e.user u WHERE u.login = ?1")
+    Empleado findEmpleadoByLogin(String login);
+}

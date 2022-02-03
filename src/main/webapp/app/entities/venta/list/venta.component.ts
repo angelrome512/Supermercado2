@@ -23,6 +23,7 @@ export class VentaComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isAnular = false;
 
   constructor(
     protected ventaService: VentaService,
@@ -55,6 +56,11 @@ export class VentaComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+  }
+
+  setActive(venta: IVenta, isAnular: boolean): void {
+    venta.anular = isAnular;
+    this.ventaService.partialUpdate(venta).subscribe(() => this.loadPage());
   }
 
   trackId(index: number, item: IVenta): number {

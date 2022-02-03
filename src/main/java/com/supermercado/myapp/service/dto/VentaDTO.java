@@ -20,6 +20,8 @@ public class VentaDTO implements Serializable {
 
     private Double total;
 
+    private Boolean anular;
+
     @NotNull
     private TipoPago tipoPago;
 
@@ -31,6 +33,14 @@ public class VentaDTO implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Boolean getAnular() {
+        return anular;
+    }
+
+    public void setAnular(Boolean anular) {
+        this.anular = anular;
     }
 
     public void setId(Long id) {

@@ -23,24 +23,21 @@ public class Empleado implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre")
     private String nombre;
 
-    @NotNull
     @Size(max = 10)
-    @Column(name = "documento", length = 10, nullable = false, unique = true)
+    @Column(name = "documento", length = 10, unique = true)
     private String documento;
 
-    @NotNull
-    @Column(name = "direccion", nullable = false)
+    @Column(name = "direccion")
     private String direccion;
 
     @NotNull
     @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono")
     private String telefono;
 
     @NotNull
@@ -54,7 +51,20 @@ public class Empleado implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
 
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "Id")
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return this.id;

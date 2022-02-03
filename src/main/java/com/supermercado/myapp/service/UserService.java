@@ -2,8 +2,10 @@ package com.supermercado.myapp.service;
 
 import com.supermercado.myapp.config.Constants;
 import com.supermercado.myapp.domain.Authority;
+import com.supermercado.myapp.domain.Empleado;
 import com.supermercado.myapp.domain.User;
 import com.supermercado.myapp.repository.AuthorityRepository;
+import com.supermercado.myapp.repository.EmpleadoRepository;
 import com.supermercado.myapp.repository.UserRepository;
 import com.supermercado.myapp.security.AuthoritiesConstants;
 import com.supermercado.myapp.security.SecurityUtils;
@@ -41,16 +43,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final EmpleadoRepository empleadoRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        EmpleadoRepository empleadoRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.empleadoRepository = empleadoRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -174,10 +180,23 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
-        userRepository.save(user);
+        user = userRepository.save(user);
+
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
+        Empleado empleado = new Empleado();
+        empleado.setUser(user);
+        empleado.setId(user.getId());
+        empleadoRepository.save(addEmpleadoUser(empleado, userDTO));
         return user;
+    }
+
+    private Empleado addEmpleadoUser(Empleado empleado, AdminUserDTO userDTO) {
+        empleado.setDocumento(null != userDTO.getDocumento() ? userDTO.getDocumento() : null);
+        empleado.setDireccion(null != userDTO.getDireccion() ? userDTO.getDireccion() : null);
+        empleado.setTelefono(null != userDTO.getTelefono() ? userDTO.getTelefono() : null);
+
+        return empleado;
     }
 
     /**
@@ -213,9 +232,21 @@ public class UserService {
                     .forEach(managedAuthorities::add);
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
+                updateEmpleado(user.getId(), userDTO);
                 return user;
             })
             .map(AdminUserDTO::new);
+    }
+
+    private void updateEmpleado(long id, AdminUserDTO userDTO) {
+        Optional
+            .of(empleadoRepository.findById(id))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .map(empleado -> {
+                log.debug("Changed Iformation for perfil usuario: {}", userDTO);
+                return addEmpleadoUser(empleado, userDTO);
+            });
     }
 
     public void deleteUser(String login) {
@@ -282,8 +313,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneWithAuthoritiesByLogin(login);
+    public Optional<AdminUserDTO> getUserWithAuthoritiesByLogin(String login) {
+        return Optional
+            .of(Optional.of(empleadoRepository.findEmpleadoByLogin(login)))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .map(AdminUserDTO::new);
     }
 
     @Transactional(readOnly = true)

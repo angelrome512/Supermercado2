@@ -2,6 +2,7 @@ package com.supermercado.myapp.service.dto;
 
 import com.supermercado.myapp.config.Constants;
 import com.supermercado.myapp.domain.Authority;
+import com.supermercado.myapp.domain.Empleado;
 import com.supermercado.myapp.domain.User;
 import java.time.Instant;
 import java.util.Set;
@@ -14,6 +15,13 @@ import javax.validation.constraints.*;
 public class AdminUserDTO {
 
     private Long id;
+
+    @Size(max = 10)
+    private String documento;
+
+    private String direccion;
+
+    private String telefono;
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -52,6 +60,15 @@ public class AdminUserDTO {
         // Empty constructor needed for Jackson.
     }
 
+    // dejar uno vacio para que jackson pueda interpretar los getter y los setter de las variables
+
+    public AdminUserDTO(Empleado empleado) {
+        this(empleado.getUser());
+        this.documento = null != empleado.getDocumento() ? empleado.getDocumento() : null;
+        this.direccion = null != empleado.getDireccion() ? empleado.getDireccion() : null;
+        this.telefono = null != empleado.getTelefono() ? empleado.getTelefono() : null;
+    }
+
     public AdminUserDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
@@ -66,6 +83,18 @@ public class AdminUserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
     }
 
     public Long getId() {
@@ -98,6 +127,18 @@ public class AdminUserDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getEmail() {

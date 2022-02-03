@@ -13,6 +13,7 @@ export interface IVenta {
   cliente?: ICliente | null;
   empleado?: IEmpleado | null;
   producto?: IProducto | null;
+  anular?: boolean | null;
 }
 
 export class Venta implements IVenta {
@@ -24,7 +25,8 @@ export class Venta implements IVenta {
     public tipoPago?: TipoPago,
     public cliente?: ICliente | null,
     public empleado?: IEmpleado | null,
-    public producto?: IProducto | null
+    public producto?: IProducto | null,
+    public anular?: boolean | null
   ) {}
 }
 

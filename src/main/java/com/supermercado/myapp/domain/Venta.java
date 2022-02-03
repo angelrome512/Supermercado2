@@ -47,7 +47,18 @@ public class Venta implements Serializable {
     @ManyToOne
     private Producto producto;
 
+    @Column(name = "anular")
+    private Boolean anular;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Boolean getAnular() {
+        return anular;
+    }
+
+    public void setAnular(Boolean anular) {
+        this.anular = anular;
+    }
 
     public Long getId() {
         return this.id;

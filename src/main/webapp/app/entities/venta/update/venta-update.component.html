@@ -1,6 +1,25 @@
 <input hidden type="hidden" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-<div class="row justify-content-center">
-  <div class="col-8">
+
+<div class="pt-4 row justify-content-center">
+  <div class="col-md-5">
+    <h2 id="jhi-venta-heading" data-cy="VentaCreateUpdateHeading">Agregar Productos</h2>
+    <!-- introducir formulario paralelo para venta detalle -->
+
+    <div class="form-group">
+      <label class="form-control-label" jhiTranslate="supermercadoApp.venta.producto" for="field_producto">Producto</label>
+      <select class="form-control" id="field_producto" data-cy="producto" name="producto" formControlName="producto">
+        <option [ngValue]="null"></option>
+        <option
+          [ngValue]="productoOption.id === editForm.get('producto')!.value?.id ? editForm.get('producto')!.value : productoOption"
+          *ngFor="let productoOption of productosSharedCollection; trackBy: trackProductoById"
+        >
+          {{ productoOption.id }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-4 justify-content-end">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-venta-heading" data-cy="VentaCreateUpdateHeading" jhiTranslate="supermercadoApp.venta.home.createOrEditLabel">
         Create or edit a Venta
@@ -57,9 +76,7 @@
               #fechaDp="ngbDatepicker"
               formControlName="fecha"
             />
-            <span class="input-group-append">
-              <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-            </span>
+            <span class="input-group-append"> </span>
           </div>
         </div>
 
@@ -126,7 +143,10 @@
           </select>
         </div>
       </div>
-
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="supermercadoApp.venta.anular" for="field_anular">Anular</label>
+        <input type="checkbox" class="form-check" name="anular" id="field_anular" data-cy="anular" formControlName="anular" />
+      </div>
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
@@ -143,5 +163,26 @@
         </button>
       </div>
     </form>
+  </div>
+
+  <div class="col-md-3">
+    <span class="tipoPago img-fluid rounded"></span>
+
+    <h2 id="jhi-venta-heading" data-cy="VentaCreateUpdateHeading">Introduce un tipo de pago</h2>
+    <!-- introducir formulario paralelo para venta detalle -->
+    <div class="form-group">
+      <label class="form-control-label" jhiTranslate="supermercadoApp.venta.tipoPago" for="field_tipoPago">Tipo Pago</label>
+      <select class="form-control" name="tipoPago" formControlName="tipoPago" id="field_tipoPago" data-cy="tipoPago">
+        <option [ngValue]="null">{{ 'supermercadoApp.TipoPago.null' | translate }}</option>
+        <option *ngFor="let tipoPago of tipoPagoValues" [value]="tipoPago">
+          {{ 'supermercadoApp.TipoPago.' + tipoPago | translate }}
+        </option>
+      </select>
+      <div *ngIf="editForm.get('tipoPago')!.invalid && (editForm.get('tipoPago')!.dirty || editForm.get('tipoPago')!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get('tipoPago')?.errors?.required" jhiTranslate="entity.validation.required">
+          This field is required.
+        </small>
+      </div>
+    </div>
   </div>
 </div>

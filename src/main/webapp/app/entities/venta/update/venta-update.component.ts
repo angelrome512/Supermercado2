@@ -19,6 +19,7 @@ import dayjs from 'dayjs/esm';
 @Component({
   selector: 'jhi-venta-update',
   templateUrl: './venta-update.component.html',
+  styleUrls: ['./ventaUp.component.scss'],
 })
 export class VentaUpdateComponent implements OnInit {
   isSaving = false;
@@ -37,6 +38,7 @@ export class VentaUpdateComponent implements OnInit {
     cliente: [],
     empleado: [],
     producto: [],
+    anular: [],
   });
 
   constructor(
@@ -114,6 +116,7 @@ export class VentaUpdateComponent implements OnInit {
       cliente: venta.cliente,
       empleado: venta.empleado,
       producto: venta.producto,
+      anular: venta.anular,
     });
 
     this.clientesSharedCollection = this.clienteService.addClienteToCollectionIfMissing(this.clientesSharedCollection, venta.cliente);
@@ -162,6 +165,7 @@ export class VentaUpdateComponent implements OnInit {
       cliente: this.editForm.get(['cliente'])!.value,
       empleado: this.editForm.get(['empleado'])!.value,
       producto: this.editForm.get(['producto'])!.value,
+      anular: this.editForm.get(['anular'])!.value,
     };
   }
 }
