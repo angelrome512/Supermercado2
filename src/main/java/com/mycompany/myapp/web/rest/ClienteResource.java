@@ -152,6 +152,25 @@ public class ClienteResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    /* SPECIFICATION */
+    /**
+     * {@code GET  /clientes/searchingParam} : get all the clientes.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of coches in body.
+     */
+    @GetMapping("/clientes/searchingParam")
+    public ResponseEntity<List<ClienteDTO>> findAllBySimpleSearch(
+        Pageable pageable,
+        @RequestParam(required = false, defaultValue = "") String filter
+    ) throws InterruptedException, URISyntaxException {
+        log.debug("REST request to get a page of Coches");
+        filter = !filter.equals("undefined") ? filter : "%";
+        Page<ClienteDTO> page = clienteService.findAllBySearchingParam(filter, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /clientes/:id} : get the "id" cliente.
      *

@@ -2,6 +2,7 @@ package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Cliente;
 import com.mycompany.myapp.repository.ClienteRepository;
+import com.mycompany.myapp.repository.specification.ClienteSpecification;
 import com.mycompany.myapp.service.ClienteService;
 import com.mycompany.myapp.service.dto.ClienteDTO;
 import com.mycompany.myapp.service.mapper.ClienteMapper;
@@ -72,5 +73,11 @@ public class ClienteServiceImpl implements ClienteService {
     public void delete(Long id) {
         log.debug("Request to delete Cliente : {}", id);
         clienteRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ClienteDTO> findAllBySearchingParam(String filter, Pageable pageable) {
+        log.debug("Request to get simple search of clientes");
+        return clienteRepository.findAll(ClienteSpecification.searchingCliente(filter), pageable).map(clienteMapper::toDto);
     }
 }

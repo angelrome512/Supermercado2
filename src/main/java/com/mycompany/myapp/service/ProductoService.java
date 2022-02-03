@@ -34,6 +34,14 @@ public interface ProductoService {
     Page<ProductoDTO> findAll(Pageable pageable);
 
     /**
+     * Get to simple search the producto by specification
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<ProductoDTO> findAllBySearchingParam(String filter, Pageable pageable);
+
+    /**
      * Get the "id" producto.
      *
      * @param id the id of the entity.

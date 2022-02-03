@@ -47,4 +47,12 @@ public interface ClienteService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get to simple search the clientes by specification
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<ClienteDTO> findAllBySearchingParam(String filter, Pageable pageable);
 }

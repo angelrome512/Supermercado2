@@ -2,6 +2,7 @@ package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Producto;
 import com.mycompany.myapp.repository.ProductoRepository;
+import com.mycompany.myapp.repository.specification.ProductoSpecification;
 import com.mycompany.myapp.service.ProductoService;
 import com.mycompany.myapp.service.dto.ProductoDTO;
 import com.mycompany.myapp.service.mapper.ProductoMapper;
@@ -59,6 +60,12 @@ public class ProductoServiceImpl implements ProductoService {
     public Page<ProductoDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Productos");
         return productoRepository.findAll(pageable).map(productoMapper::toDto);
+    }
+
+    @Override
+    public Page<ProductoDTO> findAllBySearchingParam(String filter, Pageable pageable) {
+        log.debug("Request to get simple search of producto, specification");
+        return productoRepository.findAll(ProductoSpecification.searchingParam(filter), pageable).map(productoMapper::toDto);
     }
 
     @Override
