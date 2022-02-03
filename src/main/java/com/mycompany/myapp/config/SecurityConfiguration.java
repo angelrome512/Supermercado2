@@ -103,7 +103,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .apply(securityConfigurerAdapter());
         // @formatter:on
     }
-
     private JWTConfigurer securityConfigurerAdapter() {
         return new JWTConfigurer(tokenProvider);
     }

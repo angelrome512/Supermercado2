@@ -14,7 +14,6 @@ import { EmpleadoService } from 'app/entities/empleado/service/empleado.service'
 import { ICaja } from 'app/entities/caja/caja.model';
 import { CajaService } from 'app/entities/caja/service/caja.service';
 import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
-
 @Component({
   selector: 'jhi-venta-update',
   templateUrl: './venta-update.component.html',
@@ -49,8 +48,11 @@ export class VentaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ venta }) => {
+      // if(venta.id === undefined){
+      //   const today = dayjs().startOf('day');
+      //   venta.fecha = today;
+      // }
       this.updateForm(venta);
-
       this.loadRelationshipsOptions();
     });
   }
@@ -79,6 +81,16 @@ export class VentaUpdateComponent implements OnInit {
 
   trackCajaById(index: number, item: ICaja): number {
     return item.id!;
+  }
+
+  ultimaVenta(): void {
+    this.ventaService
+      .lastSell()
+      .pipe(map((res: HttpResponse<ICliente[]>) => res.body ?? []))
+      .pipe(
+        map((ventas: IVenta[]) => this.ventaService.addVentaToCollectionIfMissing(ventas, this.editForm.get('venta')!.value))
+      )
+      .subscribe((clientes: ICliente[]) => (this.clientesSharedCollection = clientes));
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IVenta>>): void {
@@ -142,6 +154,8 @@ export class VentaUpdateComponent implements OnInit {
       .pipe(map((cajas: ICaja[]) => this.cajaService.addCajaToCollectionIfMissing(cajas, this.editForm.get('caja')!.value)))
       .subscribe((cajas: ICaja[]) => (this.cajasSharedCollection = cajas));
   }
+
+
 
   protected createFromForm(): IVenta {
     return {

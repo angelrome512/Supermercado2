@@ -166,6 +166,19 @@ public class VentaResource {
     }
 
     /**
+     * {@code GET  /ventas/:id} : get the "id" of last venta.
+     *
+     * @param id the id of the ventaDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the ventaDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/ventas/by-last/ultimaventa")
+    public ResponseEntity<List<VentaDTO>> getUltimaVenta(Pageable pageable) {
+        Page<VentaDTO> page = ventaService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * {@code DELETE  /ventas/:id} : delete the "id" venta.
      *
      * @param id the id of the ventaDTO to delete.

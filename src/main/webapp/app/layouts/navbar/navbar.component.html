@@ -49,6 +49,7 @@
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.entities.cliente">Cliente</span>
@@ -61,6 +62,7 @@
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.entities.producto">Producto</span>
@@ -73,6 +75,7 @@
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.entities.empleado">Empleado</span>
@@ -92,6 +95,7 @@
           </li>
           <li>
             <a
+              *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_GERENTE']"
               class="dropdown-item"
               routerLink="caja"
               routerLinkActive="active"
@@ -104,6 +108,7 @@
           </li>
           <li>
             <a
+            *jhiHasAnyAuthority="'ROLE_ADMIN'"
               class="dropdown-item"
               routerLink="empresa"
               routerLinkActive="active"
@@ -118,7 +123,7 @@
         </ul>
       </li>
       <li
-        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_GERENTE']"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -139,31 +144,31 @@
             </a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+            <a class="dropdown-item" *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
             </a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
+            <a class="dropdown-item" *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.admin.health">Health</span>
             </a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
+            <a class="dropdown-item" *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
             </a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
+            <a class="dropdown-item" *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.admin.logs">Logs</span>
             </a>
           </li>
           <li *ngIf="openAPIEnabled">
-            <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+            <a class="dropdown-item" *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.admin.apidocs">API</span>
             </a>

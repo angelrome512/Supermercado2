@@ -5,6 +5,8 @@ import com.mycompany.myapp.repository.VentaRepository;
 import com.mycompany.myapp.service.VentaService;
 import com.mycompany.myapp.service.dto.VentaDTO;
 import com.mycompany.myapp.service.mapper.VentaMapper;
+
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,16 @@ public class VentaServiceImpl implements VentaService {
     public VentaDTO save(VentaDTO ventaDTO) {
         log.debug("Request to save Venta : {}", ventaDTO);
         Venta venta = ventaMapper.toEntity(ventaDTO);
+
+        // if(ultimaVenta() == null){
+        //     venta.setNumeroFactura(1000001);
+        // }
+        // else{
+        //     String nF = ultimaVenta().toString();
+        //     int numF = Integer.parseInt(nF);
+        //     venta.setNumeroFactura(numF);
+        // }
+
         venta = ventaRepository.save(venta);
         return ventaMapper.toDto(venta);
     }
@@ -61,6 +73,10 @@ public class VentaServiceImpl implements VentaService {
         return ventaRepository.findAll(pageable).map(ventaMapper::toDto);
     }
 
+    /*
+    método para recoger el id de la última venta
+    */
+
     @Override
     @Transactional(readOnly = true)
     public Optional<VentaDTO> findOne(Long id) {
@@ -73,4 +89,12 @@ public class VentaServiceImpl implements VentaService {
         log.debug("Request to delete Venta : {}", id);
         ventaRepository.deleteById(id);
     }
+
+    // @Override
+    // public List<VentaDTO> ultimawVenta() {
+    //     // TODO Auto-generated method stub
+    //     return null;
+    // }
+
+
 }
