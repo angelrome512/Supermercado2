@@ -69,6 +69,23 @@ public class ProductoResource {
     }
 
     /**
+     * {@code GET  /productos/by-codigo/{codigo} : get all the productos.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of productos in body.
+     */
+    @GetMapping("/productos/by-codigo/{codigo}")
+    public ResponseEntity<List<ProductoDTO>> getAllProductosByCodigo(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable String codigo
+    ) {
+        log.debug("REST request to get a page of Productos");
+        Page<ProductoDTO> page = productoService.findAllByCodigo(codigo, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * {@code PUT  /productos/:id} : Updates an existing producto.
      *
      * @param id the id of the productoDTO to save.

@@ -14,6 +14,13 @@ import { EmpleadoService } from 'app/entities/empleado/service/empleado.service'
 import { ICaja } from 'app/entities/caja/caja.model';
 import { CajaService } from 'app/entities/caja/service/caja.service';
 import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
+<<<<<<< HEAD
+=======
+import { IProducto, Producto } from 'app/entities/producto/producto.model';
+import { ProductoService } from 'app/entities/producto/service/producto.service';
+import dayjs from 'dayjs/esm';
+
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
 @Component({
   selector: 'jhi-venta-update',
   templateUrl: './venta-update.component.html',
@@ -21,20 +28,35 @@ import { TipoPago } from 'app/entities/enumerations/tipo-pago.model';
 export class VentaUpdateComponent implements OnInit {
   isSaving = false;
   tipoPagoValues = Object.keys(TipoPago);
+  searchProducto = '';
+  productos: Producto[] = [];
 
   clientesSharedCollection: ICliente[] = [];
   empleadosSharedCollection: IEmpleado[] = [];
+<<<<<<< HEAD
   cajasSharedCollection: ICaja[] = [];
 
   editForm = this.fb.group({
     id: [],
     numeroFactura: [null, [Validators.max(99999999)]],
     fecha: [],
+=======
+  productosSharedCollection: IProducto[] = [];
+
+  editForm = this.fb.group({
+    id: [],
+    numeroFactura: [null, [Validators.max(8)]],
+    fecha: [{ value: '', disabled: true }],
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
     total: [],
     tipoPago: [null, [Validators.required]],
     cliente: [],
     empleado: [],
+<<<<<<< HEAD
     caja: [],
+=======
+    productos: [],
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
   });
 
   constructor(
@@ -43,18 +65,47 @@ export class VentaUpdateComponent implements OnInit {
     protected empleadoService: EmpleadoService,
     protected cajaService: CajaService,
     protected activatedRoute: ActivatedRoute,
+    protected productoService: ProductoService,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ venta }) => {
+<<<<<<< HEAD
       // if(venta.id === undefined){
       //   const today = dayjs().startOf('day');
       //   venta.fecha = today;
       // }
+=======
+      if (venta.id === undefined) {
+        const today = dayjs().startOf('day');
+        venta.fecha = today;
+      }
+
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
       this.updateForm(venta);
       this.loadRelationshipsOptions();
     });
+  }
+
+  searchProductos(): void {
+    if (this.searchProducto !== '') {
+      this.productoService.findByCodigo(this.searchProducto).subscribe({
+        next: (res: HttpResponse<IProducto[]>) => {
+          this.productosSharedCollection = res.body ?? [];
+        },
+      });
+    }
+  }
+
+  trackId(index: number, item: IProducto): number {
+    return item.id!;
+  }
+
+  addProduct(productoOption: IProducto): void {
+    if (productoOption !== '') {
+      this.productos.push(productoOption);
+    }
   }
 
   previousState(): void {
@@ -121,7 +172,11 @@ export class VentaUpdateComponent implements OnInit {
       tipoPago: venta.tipoPago,
       cliente: venta.cliente,
       empleado: venta.empleado,
+<<<<<<< HEAD
       caja: venta.caja,
+=======
+      productos: venta.productos,
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
     });
 
     this.clientesSharedCollection = this.clienteService.addClienteToCollectionIfMissing(this.clientesSharedCollection, venta.cliente);
@@ -167,7 +222,11 @@ export class VentaUpdateComponent implements OnInit {
       tipoPago: this.editForm.get(['tipoPago'])!.value,
       cliente: this.editForm.get(['cliente'])!.value,
       empleado: this.editForm.get(['empleado'])!.value,
+<<<<<<< HEAD
       caja: this.editForm.get(['caja'])!.value,
+=======
+      productos: this.editForm.get(['productos'])!.value,
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
     };
   }
 }

@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Producto;
+import com.mycompany.myapp.domain.enumeration.TipoIva;
 import com.mycompany.myapp.repository.ProductoRepository;
 import com.mycompany.myapp.repository.specification.ProductoSpecification;
 import com.mycompany.myapp.service.ProductoService;
@@ -36,6 +37,24 @@ public class ProductoServiceImpl implements ProductoService {
     public ProductoDTO save(ProductoDTO productoDTO) {
         log.debug("Request to save Producto : {}", productoDTO);
         Producto producto = productoMapper.toEntity(productoDTO);
+
+        if (null == producto.getPrecioTotal()) {
+            producto.setPrecioTotal(0.0);
+
+            if (null != producto.getTipoIva()) {
+                if (producto.getTipoIva() == TipoIva.A) {
+                    producto.setPrecioTotal(producto.getPrecioBase() * 1.04);
+                }
+
+                if (producto.getTipoIva() == TipoIva.B) {
+                    producto.setPrecioTotal(producto.getPrecioBase() * 1.10);
+                }
+
+                if (producto.getTipoIva() == TipoIva.C) {
+                    producto.setPrecioTotal(producto.getPrecioBase() * 1.21);
+                }
+            }
+        }
         producto = productoRepository.save(producto);
         return productoMapper.toDto(producto);
     }
@@ -79,5 +98,12 @@ public class ProductoServiceImpl implements ProductoService {
     public void delete(Long id) {
         log.debug("Request to delete Producto : {}", id);
         productoRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProductoDTO> findAllByCodigo(String codigo, Pageable pageable) {
+        log.debug("Request to get all Productos");
+        return productoRepository.productoByCodigo(codigo, pageable).map(productoMapper::toDto);
     }
 }

@@ -39,9 +39,15 @@ export class ProductoService {
     return this.http.get<IProducto[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+<<<<<<< HEAD
   simpleSearch(filter: string, pageable: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption({ filter, ...pageable });
     return this.http.get<IProducto[]>(`${this.resourceUrl}/searchingParam`, { params: options, observe: 'response' });
+=======
+  findByCodigo(codigo: string, pageable?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(pageable);
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/by-codigo/${codigo}`, { params: options, observe: 'response' });
+>>>>>>> e411ec2d82182960291bb8483bbed51e75adce6f
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
