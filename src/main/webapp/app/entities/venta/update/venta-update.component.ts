@@ -25,9 +25,6 @@ export class VentaUpdateComponent implements OnInit {
   tipoPagoValues = Object.keys(TipoPago);
   searchProducto = '';
   productos: Producto[] = [];
-  ventas?: IVenta;
-  cantidadProducto = 1;
-  preciosTotal = 0.0;
 
   clientesSharedCollection: ICliente[] = [];
   empleadosSharedCollection: IEmpleado[] = [];
@@ -81,12 +78,8 @@ export class VentaUpdateComponent implements OnInit {
   }
 
   addProduct(productoOption: IProducto): void {
-    this.productos.push(productoOption);
-  }
-
-  precioTotalVenta(): void {
-    if (this.cantidadProducto !== 0) {
-      this.preciosTotal = this.preciosTotal * this.cantidadProducto;
+    if (productoOption !== '') {
+      this.productos.push(productoOption);
     }
   }
 
